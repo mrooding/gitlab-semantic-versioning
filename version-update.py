@@ -21,7 +21,7 @@ def extract_gitlab_url_from_project_url():
 
 def extract_merge_request_id_from_commit():
     message = git("log", "-1", "--pretty=%B")
-    matches = re.search(r'(\S*\/\S*!)(\d)', message.decode("utf-8"), re.M|re.I)
+    matches = re.search(r'(\S*\/\S*!)(\d+)', message.decode("utf-8"), re.M|re.I)
     
     if matches == None:
         raise Exception(f"Unable to extract merge request from commit message: {message}")
