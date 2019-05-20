@@ -1,8 +1,11 @@
-FROM python:3.7
+FROM python:3.7-slim-stretch
 
-RUN apt-get -y upgrade && \
-    apt-get -y install git && \
-    apt-get clean
+RUN set -ex \
+    \
+    && apt-get -y upgrade \
+    && apt-get -y update \
+    && apt-get -y install git \
+    && apt-get clean
 
 WORKDIR /version-update
 
