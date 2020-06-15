@@ -41,12 +41,18 @@ def retrieve_labels_from_merge_request(merge_request_id):
     return merge_request.labels
 
 def bump(latest):
+
+    minor_bump_label = os.environ.get("MINOR_BUMP_LABEL") or "bump-minor"
+    major_bump_label = os.environ.get("MAJOR_BUMP_LABEL") or "bump-major"
+
     merge_request_id = extract_merge_request_id_from_commit()
     labels = retrieve_labels_from_merge_request(merge_request_id)
 
-    if "bump-minor" in labels:
+
+
+    if minor_bump_label in labels:
         return semver.bump_minor(latest)
-    elif "bump-major" in labels:
+    elif major_bump_label in labels:
         return semver.bump_major(latest)
     else:
         return semver.bump_patch(latest)
