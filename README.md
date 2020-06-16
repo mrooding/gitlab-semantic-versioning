@@ -19,7 +19,7 @@ As stated above, the version update workflow relies on merge request labels to d
 
 If you cannot select the specified labels in your merge request, your group was most likely created before the global labels were defined. Please follow [this guide to setup group-specific labels](https://docs.gitlab.com/ee/user/project/labels.html).
 
-Tip: You can use custom labels for minor and major bumps by setting the `MINOR_BUMP_LABEL` and `MAJOR_BUMP_LABEL` environment variables.
+Tip: You can use custom labels for minor and major bumps by setting the `MINOR_BUMP_LABEL` and `MAJOR_BUMP_LABEL` environment variables. If not set, the default labels `bump-minor` and `bump-major` will be used.
 
 ### API token and group
 
