@@ -17,7 +17,9 @@ If git tags are available, it will determine whether to do a major, minor, or pa
 
 As stated above, the version update workflow relies on merge request labels to determine the new version. The `bump-minor` and `bump-major` labels have been set as global GitLab labels. However, global labels only propogate to groups created after setting a global label. When adding a global label, they [do not automatically propogate to existing groups](https://gitlab.com/gitlab-org/gitlab-ce/issues/12707).
 
-If you cannot select the specified labels in your merge request, your group was most likely created before the global labels were defined. Please follow [this guide to setup group-specific labels](https://docs.gitlab.com/ee/user/project/labels.html) 
+If you cannot select the specified labels in your merge request, your group was most likely created before the global labels were defined. Please follow [this guide to setup group-specific labels](https://docs.gitlab.com/ee/user/project/labels.html).
+
+Tip: You can use custom labels for minor and major bumps by setting the `MINOR_BUMP_LABEL` and `MAJOR_BUMP_LABEL` environment variables. If not set, the default labels `bump-minor` and `bump-major` will be used.
 
 ### API token and group
 
