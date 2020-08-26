@@ -73,7 +73,7 @@ def main():
     [verify_env_var_presence(e) for e in env_list]
 
     try:
-        latest = git("describe", "--tags").decode().strip().rsplit("-", 1)[0]
+        latest = git("describe", "--tags").decode().strip().rsplit("-", 1)[0].replace("-", ".")
     except subprocess.CalledProcessError:
         # Default to version 1.0.0 if no tags are available
         version = "1.0.0"
