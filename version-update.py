@@ -79,7 +79,7 @@ def main():
         version = "1.0.0"
     else:
         # Skip already tagged commits
-        if '-' not in latest:
+        if version_tag_on_commit:
             print(latest)
             return 0
 
