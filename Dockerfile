@@ -13,8 +13,10 @@ COPY /requirements.txt .
 
 RUN pip install -r requirements.txt
 
-RUN echo 'alias bump_version="python3 /version-update/version-update.py"' >> /root/.bashrc
-
 COPY /version-update.py .
 
-CMD ["python", "/version-update.py"]
+COPY /bump-version /usr/bin/bump-version
+
+RUN chmod +x /usr/bin/bump-version
+
+CMD ["bump-version"]

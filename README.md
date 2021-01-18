@@ -79,7 +79,7 @@ version:
   stage: version
   image: mrooding/gitlab-semantic-versioning:latest
   script:
-    - python3 /version-update/version-update.py
+    - bump-version
   only:
    - master
 
