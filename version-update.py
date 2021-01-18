@@ -9,6 +9,9 @@ import gitlab
 def git(*args):
     return subprocess.check_output(["git"] + list(args))
 
+def get_last_commit_message():
+    return git("log", "-1", "--pretty=%B")
+
 def verify_env_var_presence(name):
     if name not in os.environ:
         raise Exception(f"Expected the following environment variable to be set: {name}")
@@ -20,10 +23,10 @@ def extract_gitlab_url_from_project_url():
     return project_url.split(f"/{project_path}", 1)[0]
 
 def extract_merge_request_id_from_commit():
-    message = git("log", "-1", "--pretty=%B")
+    message = get_last_commit_message()
     matches = re.search(r'(\S*\/\S*!)(\d+)', message.decode("utf-8"), re.M|re.I)
 
-    if matches == None:
+    if matches is None:
         raise Exception(f"Unable to extract merge request from commit message: {message}")
 
     return matches.group(2)
@@ -40,15 +43,29 @@ def retrieve_labels_from_merge_request(merge_request_id):
 
     return merge_request.labels
 
-def bump(latest):
+def get_mr_or_direct_commit_labels():
+    skip_direct_commits = os.environ.get('SKIP_DIRECT_COMMITS')
+    labels = []
+    found_mr = True
 
+    try:
+        merge_request_id = extract_merge_request_id_from_commit()
+        labels = retrieve_labels_from_merge_request(merge_request_id)
+    except Exception as e:
+        if skip_direct_commits is None:
+            raise e
+        else:
+            found_mr = False
+
+    if not (skip_direct_commits is None and found_mr):
+        labels += get_last_commit_message()
+
+    return labels
+
+def bump(latest):
     minor_bump_label = os.environ.get("MINOR_BUMP_LABEL") or "bump-minor"
     major_bump_label = os.environ.get("MAJOR_BUMP_LABEL") or "bump-major"
-
-    merge_request_id = extract_merge_request_id_from_commit()
-    labels = retrieve_labels_from_merge_request(merge_request_id)
-
-
+    labels = get_mr_or_direct_commit_labels()
 
     if minor_bump_label in labels:
         return semver.bump_minor(latest)

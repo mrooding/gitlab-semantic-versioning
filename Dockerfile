@@ -15,4 +15,8 @@ RUN pip install -r requirements.txt
 
 COPY /version-update.py .
 
-CMD ["python", "/version-update.py"]
+COPY /bump-version /usr/bin/bump-version
+
+RUN chmod +x /usr/bin/bump-version
+
+CMD ["bump-version"]
