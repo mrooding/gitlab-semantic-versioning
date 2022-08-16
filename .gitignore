@@ -202,4 +202,7 @@ tags
 # Ignore all local history of files
 .history
 
+## PyCharm ##
+.idea
+
 # End of https://www.gitignore.io/api/git,vim,terraform,visualstudiocode,python
