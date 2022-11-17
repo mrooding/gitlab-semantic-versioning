@@ -41,6 +41,7 @@ Add the following variables:
 |-----------------|----------------------------------------------------------------------|
 | NPA_USERNAME    | The name of the NPA user created for your group: `${group_name}_npa` |
 | NPA_PASSWORD    | The personal access token with API scope generated for the NPA user  |
+| REQUESTS_CA_BUNDLE    | The file path to your CA certificate. Ex.: "./root-cert.crt"   |
 
 ## Pipeline configuration
 
